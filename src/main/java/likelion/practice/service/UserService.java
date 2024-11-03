@@ -1,4 +1,3 @@
-//UserService
 package likelion.practice.service;
 
 import likelion.practice.dto.UserDTO;
