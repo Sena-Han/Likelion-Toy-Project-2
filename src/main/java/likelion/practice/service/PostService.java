@@ -5,6 +5,7 @@ import likelion.practice.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -31,5 +32,18 @@ public class PostService {
         existingPost.setImages(updatedPost.getImages());
         existingPost.setUpdatedAt(LocalDateTime.now()); // 수정일 업데이트
         return postRepository.save(existingPost);
+    }
+
+    // 게시물 삭제 기능
+    public void deletePost(Long postId) {
+        if (!postRepository.existsById(postId)) {
+            throw new RuntimeException("Post not found with ID: " + postId);
+        }
+        postRepository.deleteById(postId);
+    }
+
+    // 게시물 검색 기능
+    public List<Post> searchPosts(String keyword) {
+        return postRepository.findByTitleContainingOrContentContaining(keyword, keyword);
     }
 }
