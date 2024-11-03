@@ -60,4 +60,15 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password.");
         }
     }
+
+    // 아이디 중복 조회 API
+    @GetMapping("/check-id")
+    public ResponseEntity<String> checkUserIdDuplicate(@RequestParam String userId) {
+        boolean isDuplicate = userService.checkUserIdDuplicate(userId);
+        if (isDuplicate) {
+            return ResponseEntity.ok("해당 아이디가 이미 존재합니다.");
+        } else {
+            return ResponseEntity.ok("사용 가능한 아이디입니다.");
+        }
+    }
 }
