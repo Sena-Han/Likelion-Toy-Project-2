@@ -39,6 +39,7 @@ public class UserService implements UserDetailsService {
                 .authorities("USER")
                 .build();
     }
+
     // 회원가입 기능
     public User registerUser(UserDTO userDTO) {
         if (userRepository.existsByUserId(userDTO.getUserId())) {
@@ -64,5 +65,10 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    // 아이디 중복 조회 기능
+    public boolean checkUserIdDuplicate(String userId) {
+        return userRepository.existsByUserId(userId);
     }
 }
