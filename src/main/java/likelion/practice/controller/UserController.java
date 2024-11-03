@@ -71,4 +71,20 @@ public class UserController {
             return ResponseEntity.ok("사용 가능한 아이디입니다.");
         }
     }
+
+    // 마이 페이지 조회 API
+    @GetMapping("/profile")
+    public ResponseEntity<User> getUserProfile(Authentication authentication) {
+        String userId = authentication.getName();
+        User user = userService.getUserProfile(userId);
+        return ResponseEntity.ok(user);
+    }
+
+    // 마이 페이지 수정 API
+    @PutMapping("/profile")
+    public ResponseEntity<User> updateUserProfile(Authentication authentication, @RequestBody UserDTO updatedUser) {
+        String userId = authentication.getName();
+        User user = userService.updateUserProfile(userId, updatedUser);
+        return ResponseEntity.ok(user);
+    }
 }

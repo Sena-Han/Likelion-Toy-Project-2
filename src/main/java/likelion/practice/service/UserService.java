@@ -71,4 +71,25 @@ public class UserService implements UserDetailsService {
     public boolean checkUserIdDuplicate(String userId) {
         return userRepository.existsByUserId(userId);
     }
+
+    // 마이 페이지 조회 기능
+    public User getUserProfile(String userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
+    }
+
+    // 마이 페이지 수정 기능
+    public User updateUserProfile(String userId, UserDTO updatedUser) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
+
+        if (updatedUser.getName() != null) {
+            user.setName(updatedUser.getName());
+        }
+        if (updatedUser.getProfileImage() != null) {
+            user.setProfileImage(updatedUser.getProfileImage());
+        }
+
+        return userRepository.save(user);
+    }
 }
